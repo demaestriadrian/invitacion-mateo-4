@@ -1,5 +1,32 @@
 {
+  // Extiende la configuración estricta de Astro para tener las mejores prácticas por defecto.
   "extends": "astro/tsconfigs/strict",
-  "include": [".astro/types.d.ts", "**/*"],
+  "compilerOptions": {
+    // Configura la base para las rutas de importación.
+    "baseUrl": ".",
+    // Define el alias: @/ se resuelve a la carpeta src/.
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    // Opciones para la compilación de tu código.
+    "module": "ESNext",
+    "target": "ESNext",
+    "lib": ["ESNext", "DOM"],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
+    "strict": true,
+    "noEmit": true,
+    "moduleResolution": "node"
+  },
+  // Incluye todos los archivos que TypeScript debe analizar.
+  "include": [
+    "src/**/*",
+    "./.astro/types.d.ts"
+  ],
   "exclude": ["dist"]
 }
