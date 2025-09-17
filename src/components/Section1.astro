@@ -1,1 +1,11 @@
-<div>seccion 1</div>
+---
+import logo from "@/assets/logo.png";
+import Image from "astro/components/Image.astro";
+---
+
+<div
+    class="relative -z-20 h-[96svh] w-full flex items-center justify-center text-3xl font-bold bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 text-white"
+>
+    <Image src={logo} alt="Logo de Astro" class="w-5/6" />
+    <div class="absolute w-full h-full -z-10">VIDEO</div>
+</div>
