@@ -1,11 +1,17 @@
 ---
 import logo from "@/assets/logo.png";
+import video from "@/assets/spiderman_v.mp4";
 import Image from "astro/components/Image.astro";
 ---
 
 <div
-    class="relative -z-20 h-[96svh] w-full flex items-center justify-center text-3xl font-bold bg-gradient-to-br from-purple-400 via-pink-500 to-red-500 text-white"
+    class="relative -z-20 max-h-[96svh] w-full aspect-[9/16] flex items-end justify-center bg-black"
 >
-    <Image src={logo} alt="Logo de Astro" class="w-5/6" />
-    <div class="absolute w-full h-full -z-10">VIDEO</div>
+    <Image src={logo} alt="Logo de Astro" class="w-3/4 mb-6" />
+    <div class="absolute w-full h-full -z-10">
+        <video autoplay muted loop class="w-full h-full object-cover">
+            <source src={video} type="video/mp4" />
+            Your browser does not support the video tag.
+        </video>
+    </div>
 </div>
