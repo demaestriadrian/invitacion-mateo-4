@@ -1,17 +1,32 @@
 ---
 import logo from "@/assets/logo.png";
-import video from "@/assets/spiderman_v.mp4";
+import video from "@/assets/spiderman_vb.mp4";
 import Image from "astro/components/Image.astro";
 ---
 
 <div
+    id="heroSection"
     class="relative -z-20 max-h-[96svh] w-full aspect-[9/16] flex items-end justify-center bg-black"
 >
-    <Image src={logo} alt="Logo de Astro" class="w-3/4 mb-6" />
+    <Image src={logo} alt="Logo de Astro" class="w-3/4 mb-6 z-30" />
     <div class="absolute w-full h-full -z-10">
         <video autoplay muted loop class="w-full h-full object-cover">
             <source src={video} type="video/mp4" />
             Your browser does not support the video tag.
         </video>
     </div>
+    <div id="sombra" class="absolute inset-0 bg-gradient-to-t from-1%  from-black to-transparent"></div>
 </div>
+
+<script>
+    import { animateHero } from "@/animations";
+
+    const heroSection = document.getElementById("heroSection") as HTMLElement;
+    const video = heroSection.querySelector("video") as HTMLVideoElement;
+    const logo = heroSection.querySelector("img") as HTMLElement;
+    const sombra = document.getElementById("sombra") as HTMLElement;
+
+    if (heroSection && video && logo && sombra) {
+        animateHero({ heroSection, video, logo, sombra });
+    }
+</script>
