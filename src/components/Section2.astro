@@ -21,7 +21,7 @@ import edificios from "../assets/edificios.png";
 
     <style>
         main {
-            overflow-x: scroll;
+            overflow-x: hidden;
         }
         #edificios {
             display: flex;
@@ -34,10 +34,38 @@ import edificios from "../assets/edificios.png";
 
         section{
             width: 100vw;
+            display: grid;
+            place-items: center;
         }
     </style>
 </main>
 
 <script>
+    import { gsap } from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+    gsap.registerPlugin(ScrollTrigger);
+
+    const main = document.querySelector("main") as HTMLElement;
+    const edificios = document.getElementById("edificios") as HTMLElement;
+    const sections = Array.from(edificios.querySelectorAll("section")) as HTMLElement[];
+    const numSections = sections.length;
+
+    edificios.style.width = `${numSections * 100}vw`;
+    edificios.style.backgroundSize = `calc(115% / ${numSections}) auto`;
+    
+
+    gsap.to(edificios, {
+        x: () => `-${edificios.scrollWidth - main.clientWidth}px`,
+        ease: "none",
+        scrollTrigger: {
+            trigger: main,
+            start: "top top",
+            end: () => `+=${edificios.scrollWidth - main.clientWidth}`,
+            scrub: 1,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+        },
+    });
 </script>
