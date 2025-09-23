@@ -32,20 +32,26 @@ import edificios from "../assets/edificios.png";
 <script>
     import { gsap } from "gsap";
     import { ScrollTrigger } from "gsap/ScrollTrigger";
+    import { Observer } from "gsap/Observer";
+    import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 
-    gsap.registerPlugin(ScrollTrigger);
+    gsap.registerPlugin(ScrollTrigger, Observer, ScrollToPlugin);
 
     const main = document.querySelector("main") as HTMLElement;
     const edificios = document.getElementById("edificios") as HTMLElement;
     const sections = Array.from(
-        edificios.querySelectorAll("section"),
+        edificios.querySelectorAll("section")
     ) as HTMLElement[];
     const numSections = sections.length;
+
+    // Variables para el control de la sección actual
+    let currentSection = 0;
+    let isAnimating = false; // Flag para controlar la animación
 
     edificios.style.width = `${numSections * 100}vw`;
     edificios.style.backgroundSize = `calc(115% / ${numSections}) auto`;
 
-    gsap.to(edificios, {
+    const tl = gsap.to(edificios, {
         x: () => `-${edificios.scrollWidth - main.clientWidth}px`,
         ease: "none",
         scrollTrigger: {
@@ -56,8 +62,62 @@ import edificios from "../assets/edificios.png";
             pin: true,
             anticipatePin: 1,
             invalidateOnRefresh: true,
+            snap: {
+                snapTo: (value) => {
+                    let progress = value * (sections.length - 1);
+                    currentSection = Math.round(progress);
+                    return currentSection / (sections.length - 1);
+                },
+                duration: 0.5,
+                ease: "power2.inOut",
+                directional: false
+            }
         },
     });
 
-    
+    // Función para navegar a una sección específica
+    function goToSection(index: number) {
+        if (isAnimating) return; // Si está animando, no hacer nada
+        
+        isAnimating = true; // Activar el flag de animación
+        
+        const progress = index / (sections.length - 1);
+        const scrollTrigger = tl.scrollTrigger;
+        
+        if (scrollTrigger) {
+            const targetScroll = gsap.utils.mapRange(
+                0, 
+                1, 
+                scrollTrigger.start, 
+                scrollTrigger.end, 
+                progress
+            );
+            
+            gsap.to(window, {
+                scrollTo: targetScroll,
+                duration: 1,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    isAnimating = false; // Desactivar el flag cuando termina
+                }
+            });
+        }
+    }
+
+    // Configuración del Observer para detectar swipes
+    Observer.create({
+        target: main,
+        type: "touch",
+        tolerance: 50,
+        onRight: () => {
+            if (!isAnimating && currentSection > 0) {
+                goToSection(currentSection - 1);
+            }
+        },
+        onLeft: () => {
+            if (!isAnimating && currentSection < sections.length - 1) {
+                goToSection(currentSection + 1);
+            }
+        }
+    });
 </script>
