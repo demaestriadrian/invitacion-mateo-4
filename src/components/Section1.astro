@@ -11,7 +11,7 @@ import Image from "astro/components/Image.astro";
 >
     <Image src={logo} alt="Logo de Astro" class="w-5/8 mb-6 z-30" />
     <div class="absolute w-full h-full -z-10">
-        <video autoplay muted loop class="w-full h-full object-cover">
+        <video autoplay muted loop playsinline class="w-full h-full object-cover">
             <source src={video} type="video/mp4" />
             Your browser does not support the video tag.
         </video>
@@ -22,7 +22,9 @@ import Image from "astro/components/Image.astro";
     >
     </div>
 </div>
-<Arrow id="arrow-down" class="absolute right-2 bottom-6 size-8 z-30 text-amber-50 opacity-85 animate-bounce"/>
+<a href="#mainSection" aria-label="Scroll down">
+    <Arrow id="arrow-down" class="absolute right-2 bottom-6 size-8 z-30 text-amber-50 opacity-85 animate-bounce"/>
+</a>
 
 <script>
     import { gsap } from "gsap";

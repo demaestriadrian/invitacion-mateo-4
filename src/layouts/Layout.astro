@@ -3,13 +3,16 @@ import "@/styles/global.css";
 ---
 
 <!doctype html>
-<html lang="es">
+<html lang="es" class="dark scroll-smooth">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="generator" content={Astro.generator} />
 		<title>Astro Basics</title>
+		<script is:inline>
+			if (window.history.scrollRestoration) window.history.scrollRestoration = "manual";
+		</script>
 	</head>
 	<body>
 		<slot />
@@ -22,6 +25,7 @@ import "@/styles/global.css";
 		margin: 0;
 		padding: 0;
 		box-sizing: border-box;
-		width: 100%;
+		width: 100vw;
+		overflow-x: hidden;
 	}
 </style>
