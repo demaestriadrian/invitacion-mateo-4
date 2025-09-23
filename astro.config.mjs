@@ -5,6 +5,12 @@ import path from 'path';
 
 // https://astro.build/config
 export default defineConfig({
+    output: 'static', // Asegúrate de que esté en modo estático
+    image: {
+        service: {
+            entrypoint: 'astro/assets/services/sharp'
+        }
+    },
     vite: {
         plugins: [
             tailwindcss(),
