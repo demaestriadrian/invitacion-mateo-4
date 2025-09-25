@@ -44,9 +44,24 @@ import edificios from "../assets/edificios.png";
     ) as HTMLElement[];
     const numSections = sections.length;
 
-    // Variables para el control de la sección actual
+    // Variables de control
     let currentSection = 0;
-    let isAnimating = false; // Flag para controlar la animación
+    let isAnimating = false;
+    let isScrolling = false;
+    let scrollTimeout: number;
+
+    // Función para detectar cuando el scroll termina
+    const handleScroll = () => {
+        isScrolling = true;
+        clearTimeout(scrollTimeout);
+        
+        scrollTimeout = setTimeout(() => {
+            isScrolling = false;
+        }, 150) as unknown as number; // tiempo en ms para considerar que el scroll terminó
+    };
+
+    // Agregar detector de scroll
+    window.addEventListener('scroll', handleScroll);
 
     edificios.style.width = `${numSections * 100}vw`;
     edificios.style.backgroundSize = `calc(115% / ${numSections}) auto`;
@@ -110,14 +125,20 @@ import edificios from "../assets/edificios.png";
         type: "touch",
         tolerance: 50,
         onRight: () => {
-            if (!isAnimating && currentSection > 0) {
+            if (!isAnimating && !isScrolling && currentSection > 0) {
                 goToSection(currentSection - 1);
             }
         },
         onLeft: () => {
-            if (!isAnimating && currentSection < sections.length - 1) {
+            if (!isAnimating && !isScrolling && currentSection < sections.length - 1) {
                 goToSection(currentSection + 1);
             }
         }
+    });
+
+    // Limpiar el event listener cuando el componente se desmonte
+    document.addEventListener('astro:unmount', () => {
+        window.removeEventListener('scroll', handleScroll);
+        clearTimeout(scrollTimeout);
     });
 </script>
