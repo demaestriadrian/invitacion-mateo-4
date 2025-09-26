@@ -1,0 +1,23 @@
+---
+---
+<div
+    id="modal"
+    class="absolute inset-0 w-svw h-dvh aspect-square grid place-items-center bg-black"
+>
+    <button onclick="" class="bg-amber-300 p-3 rounded-3xl "> AQUI </button>
+</div>
+
+<script>
+    const modal = document.getElementById("modal") as HTMLDialogElement;
+    const button = modal.querySelector("button") as HTMLButtonElement;
+    
+    // Agregar clases de Tailwind al body cuando el modal se abre
+    document.body.classList.add('overflow-hidden', 'h-screen', 'touch-none');
+    
+    button.addEventListener("click", () => {
+        // Remover clases de Tailwind al cerrar el modal
+        console.log(modal);
+        modal.classList.add('hidden');
+        document.body.classList.remove('overflow-hidden', 'h-screen', 'touch-none');
+    });
+</script>
