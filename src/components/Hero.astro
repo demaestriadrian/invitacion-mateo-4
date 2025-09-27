@@ -38,8 +38,8 @@ const video = "https://res.cloudinary.com/dmylbehd5/video/upload/v1758596380/spi
     const heroSection = document.getElementById("heroSection") as HTMLElement;
     const video = heroSection.querySelector("video") as HTMLVideoElement;
     const logo = heroSection.querySelector("img") as HTMLElement;
-    const sombra = document.getElementById("sombra") as HTMLElement;
-    const arrow = document.getElementById("arrow-down") as HTMLElement;
+    const heroShadow = document.getElementById("sombra") as HTMLElement;
+    const arrowDown = document.getElementById("arrow-down") as HTMLElement;
 
     // Control de reproducción del video al hacer scroll
     ScrollTrigger.create({
@@ -78,7 +78,7 @@ const video = "https://res.cloudinary.com/dmylbehd5/video/upload/v1758596380/spi
      
 
     // Animación de la sombra al hacer scroll 🌑
-    gsap.fromTo(sombra,
+    gsap.fromTo(heroShadow,
         {
             opacity: 0,
         },
@@ -105,15 +105,15 @@ const video = "https://res.cloudinary.com/dmylbehd5/video/upload/v1758596380/spi
     });
 
     // Animación de la flecha ⬇️
-    gsap.from(arrow, {
+    gsap.from(arrowDown, {
         opacity: 0,
         y: -50, 
         duration: 5,
         delay: 7,
         onComplete: () => {
-            gsap.killTweensOf(arrow);
+            gsap.killTweensOf(arrowDown);
 
-            gsap.to(arrow, {
+            gsap.to(arrowDown, {
                 scrollTrigger: {
                     trigger: heroSection,
                     start: "center 26%",
