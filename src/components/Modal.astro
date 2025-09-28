@@ -1,10 +1,15 @@
 ---
+import introduccion from "@/assets/audio/introduccionG.mp3";
+import musica from "@/assets/audio/musica.mp3";
 ---
+
 <div
     id="modal"
     class="absolute inset-0 w-svw h-dvh aspect-square grid place-items-center bg-black"
 >
-    <button onclick="" class="bg-amber-300 p-3 rounded-3xl "> AQUI </button>
+    <button onclick="" class="bg-amber-300 p-3 rounded-3xl"> AQUI </button>
+    <audio class="hidden" id="introduccion" src={introduccion}></audio>
+    <audio class="hidden" loop id="musica" src={musica}></audio>
 </div>
 
 <script>
@@ -12,15 +17,51 @@
 
     const modal = document.getElementById("modal") as HTMLDialogElement;
     const button = modal.querySelector("button") as HTMLButtonElement;
-    
+    const introduccionAudio = document.getElementById("introduccion") as HTMLAudioElement;
+    const musicaAudio = document.getElementById("musica") as HTMLAudioElement;
+
     // Agregar clases de Tailwind al body cuando el modal se abre
-    document.body.classList.add('overflow-hidden', 'h-screen', 'touch-none');
-    
+    document.body.classList.add("overflow-hidden", "h-screen", "touch-none");
+
+    introduccionAudio.onended = () => {
+        musicaAudio.play();
+    };
+
     button.addEventListener("click", () => {
         // Remover clases de Tailwind al cerrar el modal
         console.log(modal);
-        modal.classList.add('hidden');
-        document.body.classList.remove('overflow-hidden', 'h-screen', 'touch-none');
+        modal.classList.add("hidden");
+        document.body.classList.remove(
+            "overflow-hidden",
+            "h-screen",
+            "touch-none",
+        );
         initAnimations();
+        introduccionAudio.play();
+
     });
+
+    // Pausar/reanudar audio cuando se cambia de pestaña
+    document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+            // La pestaña está oculta, pausar todos los audios
+            if (!introduccionAudio.paused) {
+                introduccionAudio.pause();
+            }
+            if (!musicaAudio.paused) {
+                musicaAudio.pause();
+            }
+        } else {
+            // La pestaña está visible, reanudar el audio si el modal está cerrado
+            if (modal.classList.contains("hidden")) {
+                if (introduccionAudio.paused && introduccionAudio.currentTime > 0) {
+                    introduccionAudio.play();
+                } else if (musicaAudio.paused && musicaAudio.currentTime > 0) {
+                    musicaAudio.play();
+                }
+            }
+        }
+    });
+
+
 </script>
