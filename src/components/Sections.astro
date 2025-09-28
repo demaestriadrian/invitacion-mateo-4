@@ -10,7 +10,7 @@ import edificios from "../assets/edificios.png";
 >   
     
     <div
-        id="edificios"
+        id="container"
         class="absolute inset-0 h-full w-full z-10 flex bg-repeat-x bg-bottom"
         style={`background-image: url(${edificios.src});`}
     >
@@ -28,117 +28,16 @@ import edificios from "../assets/edificios.png";
         place-items: center;
     }
 </style>
-
 <script>
-    import { gsap } from "gsap";
-    import { ScrollTrigger } from "gsap/ScrollTrigger";
-    import { Observer } from "gsap/Observer";
-    import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+    import { setSectionsAnimation } from "@/libs/animations";
 
-    gsap.registerPlugin(ScrollTrigger, Observer, ScrollToPlugin);
-
-    const main = document.querySelector("main") as HTMLElement;
-    const edificios = document.getElementById("edificios") as HTMLElement;
-    const sections = Array.from(
-        edificios.querySelectorAll("section")
-    ) as HTMLElement[];
-    const numSections = sections.length;
-
-    // Variables de control
-    let currentSection = 0;
-    let isAnimating = false;
-    let isScrolling = false;
-    let scrollTimeout: number;
-
-    // Función para detectar cuando el scroll termina
-    const handleScroll = () => {
-        isScrolling = true;
-        clearTimeout(scrollTimeout);
-        
-        scrollTimeout = setTimeout(() => {
-            isScrolling = false;
-        }, 150) as unknown as number; // tiempo en ms para considerar que el scroll terminó
-    };
-
-    // Agregar detector de scroll
-    window.addEventListener('scroll', handleScroll);
-
-    edificios.style.width = `${numSections * 100}vw`;
-    edificios.style.backgroundSize = `calc(115% / ${numSections}) auto`;
-
-    const tl = gsap.to(edificios, {
-        x: () => `-${edificios.scrollWidth - main.clientWidth}px`,
-        ease: "none",
-        scrollTrigger: {
-            trigger: main,
-            start: "top top",
-            end: () => `+=${edificios.scrollWidth - main.clientWidth}`,
-            scrub: 1,
-            pin: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            snap: {
-                snapTo: (value) => {
-                    let progress = value * (sections.length - 1);
-                    currentSection = Math.round(progress);
-                    return currentSection / (sections.length - 1);
-                },
-                duration: 0.5,
-                ease: "power2.inOut",
-                directional: false
-            }
-        },
+    document.addEventListener("DOMContentLoaded", () => {    
+        setSectionsAnimation({
+            main: document.getElementById("mainSection") as HTMLElement,
+            container: document.getElementById("container") as HTMLElement,
+            sections: Array.from(document.querySelectorAll("section")) as HTMLElement[],
+        });
     });
 
-    // Función para navegar a una sección específica
-    function goToSection(index: number) {
-        if (isAnimating) return; // Si está animando, no hacer nada
-        
-        isAnimating = true; // Activar el flag de animación
-        
-        const progress = index / (sections.length - 1);
-        const scrollTrigger = tl.scrollTrigger;
-        
-        if (scrollTrigger) {
-            const targetScroll = gsap.utils.mapRange(
-                0, 
-                1, 
-                scrollTrigger.start, 
-                scrollTrigger.end, 
-                progress
-            );
-            
-            gsap.to(window, {
-                scrollTo: targetScroll,
-                duration: 1,
-                ease: "power2.inOut",
-                onComplete: () => {
-                    isAnimating = false; // Desactivar el flag cuando termina
-                }
-            });
-        }
-    }
-
-    // Configuración del Observer para detectar swipes
-    Observer.create({
-        target: main,
-        type: "touch",
-        tolerance: 50,
-        onRight: () => {
-            if (!isAnimating && !isScrolling && currentSection > 0) {
-                goToSection(currentSection - 1);
-            }
-        },
-        onLeft: () => {
-            if (!isAnimating && !isScrolling && currentSection < sections.length - 1) {
-                goToSection(currentSection + 1);
-            }
-        }
-    });
-
-    // Limpiar el event listener cuando el componente se desmonte
-    document.addEventListener('astro:unmount', () => {
-        window.removeEventListener('scroll', handleScroll);
-        clearTimeout(scrollTimeout);
-    });
 </script>
+

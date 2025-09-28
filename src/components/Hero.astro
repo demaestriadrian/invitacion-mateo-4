@@ -4,7 +4,7 @@ import Arrow from "@/assets/arrow.svg";
 import Image from "astro/components/Image.astro";
 import fallbackVideo from "@/assets/spiderman_v_fb.mp4";
 
-const video = "https://res.cloudinary.com/dmylbehd5/video/upload/v1758596380/spiderman_v_dckcaq.mp4";
+const video = "https://res.cloudinary.com/dmylbehd5/video/upload/v1758596380/spiderman_v_dckcaq.mp4"
 ---
 
 <div
@@ -13,7 +13,7 @@ const video = "https://res.cloudinary.com/dmylbehd5/video/upload/v1758596380/spi
 >
     <Image src={logo} alt="Logo de Astro" class="w-5/8 mb-6 z-30" />
     <div class="absolute w-full h-full -z-10">
-        <video autoplay muted loop playsinline class="w-full h-full object-cover">
+        <video muted loop playsinline class="w-full h-full object-cover">
             <source src={video} type="video/mp4" />
             <source src={fallbackVideo} type="video/mp4" />
             Your browser does not support the video tag.
@@ -26,103 +26,20 @@ const video = "https://res.cloudinary.com/dmylbehd5/video/upload/v1758596380/spi
     </div>
 </div>
 <a href="#mainSection" aria-label="Scroll down">
-    <Arrow id="arrow-down" class="absolute right-2 bottom-6 size-8 z-30 text-amber-50 opacity-85 animate-bounce"/>
+    <Arrow id="arrow-down" class="absolute right-2 bottom-6 size-8 z-30 text-amber-50 opacity-0 animate-bounce"/>
 </a>
 
 <script>
-    import { gsap } from "gsap";
-    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    import { setHeroAnimation } from "@/libs/animations";
 
-    gsap.registerPlugin(ScrollTrigger);
-
-    const heroSection = document.getElementById("heroSection") as HTMLElement;
-    const video = heroSection.querySelector("video") as HTMLVideoElement;
-    const logo = heroSection.querySelector("img") as HTMLElement;
-    const heroShadow = document.getElementById("sombra") as HTMLElement;
-    const arrowDown = document.getElementById("arrow-down") as HTMLElement;
-
-    // Control de reproducción del video al hacer scroll
-    ScrollTrigger.create({
-        trigger: heroSection,
-        start: "50% top",
-        end: "50% bottom",
-        pinSpacing: false,
-        onLeave: () => video.pause(),
-        onLeaveBack: () => video.play(),
-    });
-
-    //Animación del logo 🕷️
-    gsap.from(logo, {
-        opacity: 0,
-        sacale: 0.7,
-        duration: 4,
-        delay: 3.5,
-        onComplete: () => {
-            gsap.killTweensOf(logo);
-
-           gsap.to(logo, {
-                opacity: 0,
-                y: -50,
-                scale: 0.8,
-                duration: .6,
-                scrollTrigger: {
-                    trigger: heroSection,
-                    toggleActions: "play none reverse none",
-                    start: "center top",
-                    end: "center top",
-                },
-            });
-        }
-    })
-
-     
-
-    // Animación de la sombra al hacer scroll 🌑
-    gsap.fromTo(heroShadow,
-        {
-            opacity: 0,
-        },
-        {
-            scrollTrigger: {
-                trigger: heroSection,
-                start: "center 30%",
-                end: "center top",
-                scrub: true,
-            },
-            opacity: 1,
-        }
-    );
-    
-    // Animación del video al hacer scroll 🎥
-    gsap.to(video, {
-        scrollTrigger: {
-            trigger: heroSection,
-            start: "center 26%",
-            end: "bottom top",
-            scrub: true,
-        },
-        y: '+=300',
-    });
-
-    // Animación de la flecha ⬇️
-    gsap.from(arrowDown, {
-        opacity: 0,
-        y: -50, 
-        duration: 5,
-        delay: 7,
-        onComplete: () => {
-            gsap.killTweensOf(arrowDown);
-
-            gsap.to(arrowDown, {
-                scrollTrigger: {
-                    trigger: heroSection,
-                    start: "center 26%",
-                    end: "bottom top",
-                    scrub: true,
-                },
-                opacity: 0,
-            });
-        }
+    document.addEventListener("DOMContentLoaded", () => {    
+        setHeroAnimation({
+            heroSection: document.getElementById("heroSection") as HTMLElement,
+            video: document.querySelector("video") as HTMLVideoElement,
+            logo: document.querySelector("img") as HTMLElement,
+            heroShadow: document.getElementById("sombra") as HTMLElement,
+            arrowDown: document.getElementById("arrow-down") as HTMLElement,
+        });
     });
 
 </script>

@@ -8,6 +8,8 @@
 </div>
 
 <script>
+    import { initAnimations } from "@/libs/animations";
+
     const modal = document.getElementById("modal") as HTMLDialogElement;
     const button = modal.querySelector("button") as HTMLButtonElement;
     
@@ -19,5 +21,6 @@
         console.log(modal);
         modal.classList.add('hidden');
         document.body.classList.remove('overflow-hidden', 'h-screen', 'touch-none');
+        initAnimations();
     });
 </script>
