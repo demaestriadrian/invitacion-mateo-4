@@ -1,31 +1,48 @@
 ---
 import "@/styles/global.css";
+import icon from "@/assets/icon.png";
+import imgOg from "@/assets/img_og.jpg";
 ---
 
 <!doctype html>
 <html lang="es" class="dark scroll-smooth">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-		<script is:inline>
-			if (window.history.scrollRestoration) window.history.scrollRestoration = "manual";
-		</script>
-	</head>
-	<body>
-		<slot />
-	</body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/png" href={icon.src} />
+        
+        <title>Cumpleaños de Mateo N°4</title>
+        
+        <!-- Open Graph Meta Tags -->
+        <meta property="og:title" content="Cumpleaños de Mateo N°4" />
+        <meta property="og:description" content="¡Te invitamos a celebrar el cuarto cumpleaños de Mateo! Una fiesta llena de diversión, juegos y sorpresas te espera." />
+        <meta property="og:image" content={`https://invitacion-mateo.a-un.click${imgOg.src}`} />
+        <meta property="og:url" content="https://invitacion-mateo.a-un.click" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="Cumpleaños de Mateo N°4" />
+        
+        <!-- Twitter Card Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Cumpleaños de Mateo N°4" />
+        <meta name="twitter:description" content="¡Te invitamos a celebrar el cuarto cumpleaños de Mateo! Una fiesta llena de diversión, juegos y sorpresas te espera." />
+        <meta name="twitter:image" content={`https://invitacion-mateo.a-un.click${imgOg.src}`} />
+        
+        <script is:inline>
+            if (window.history.scrollRestoration) window.history.scrollRestoration = "manual";
+        </script>
+    </head>
+    <body>
+        <slot />
+    </body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-		width: 100vw;
-		overflow-x: hidden;
-	}
+    html,
+    body {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        width: 100vw;
+        overflow-x: hidden;
+    }
 </style>
