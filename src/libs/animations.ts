@@ -111,6 +111,18 @@ const initHeroAnimation = () => {
         }
     });
 
+    arrowDown.addEventListener("click", () => {
+        // usar gsap para hacer scroll suave a la primer seccion
+        gsap.to(window, {
+            scrollTo: {
+                y: "#mainSection",
+                autoKill: false
+            },
+            duration: 1,
+            ease: "power2.inOut"
+        });
+    })
+
     video.play();
 }
 
