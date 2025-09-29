@@ -1,13 +1,27 @@
 ---
 import introduccion from "@/assets/audio/introduccionG.mp3";
 import musica from "@/assets/audio/musica.mp3";
+import Image from "astro/components/Image.astro";
+import modalBg from "@/assets/modal_bg.png";
+import Red from "@/assets/red2.svg";
 ---
 
-<div
-    id="modal"
-    class="absolute inset-0 w-svw h-dvh aspect-square grid place-items-center bg-black"
->
-    <button onclick="" class="bg-amber-300 p-3 rounded-3xl"> AQUI </button>
+<div id="modal" class="absolute inset-0 w-svw h-lvh grid z-60">
+    <div class="h-full w-full grid place-items-center z-60">
+        
+        <button onclick="" class="translate-y-28 relative"> 
+            <Red class="absolute inset-0 inline size-60 fill-rose-200" />
+            <h1>ver</h1>
+        </button>
+    </div>
+    <Image
+        src={modalBg}
+        alt="Fondo del modal"
+        widths={[400, 800, 1200, 1600]}
+        format="webp"
+        sizes={"(max-width: 600px) 400px, (max-width: 1200px) 800px, (max-width: 1800px) 1200px, 1600px"}
+        class="full absolute top-0 left-0 w-svw h-dvh object-cover z-50"
+    />
     <audio class="hidden" id="introduccion" src={introduccion}></audio>
     <audio class="hidden" loop id="musica" src={musica}></audio>
 </div>
@@ -17,7 +31,9 @@ import musica from "@/assets/audio/musica.mp3";
 
     const modal = document.getElementById("modal") as HTMLDialogElement;
     const button = modal.querySelector("button") as HTMLButtonElement;
-    const introduccionAudio = document.getElementById("introduccion") as HTMLAudioElement;
+    const introduccionAudio = document.getElementById(
+        "introduccion",
+    ) as HTMLAudioElement;
     const musicaAudio = document.getElementById("musica") as HTMLAudioElement;
 
     // Agregar clases de Tailwind al body cuando el modal se abre
@@ -38,7 +54,6 @@ import musica from "@/assets/audio/musica.mp3";
         );
         initAnimations();
         introduccionAudio.play();
-
     });
 
     // Pausar/reanudar audio cuando se cambia de pestaña
@@ -54,7 +69,10 @@ import musica from "@/assets/audio/musica.mp3";
         } else {
             // La pestaña está visible, reanudar el audio si el modal está cerrado
             if (modal.classList.contains("hidden")) {
-                if (introduccionAudio.paused && introduccionAudio.currentTime > 0) {
+                if (
+                    introduccionAudio.paused &&
+                    introduccionAudio.currentTime > 0
+                ) {
                     introduccionAudio.play();
                 } else if (musicaAudio.paused && musicaAudio.currentTime > 0) {
                     musicaAudio.play();
@@ -62,6 +80,4 @@ import musica from "@/assets/audio/musica.mp3";
             }
         }
     });
-
-
 </script>
