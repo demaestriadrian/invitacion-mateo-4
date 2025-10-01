@@ -12,7 +12,7 @@ const video =
     id="heroSection"
     class="relative -z-20 max-h-[96svh] w-full aspect-[9/16] flex items-end justify-center bg-black"
 >
-    <Image src={logo} alt="Logo de Astro" class="w-5/8 mb-6 z-30" />
+    <Image id="logo" src={logo} alt="Logo de Astro" class="w-5/8 mb-6 z-30" />
     <div class="absolute w-full h-full -z-10">
         <video muted loop playsinline class="w-full h-full object-cover">
             <source src={video} type="video/mp4" />
@@ -38,7 +38,7 @@ const video =
         setHeroAnimation({
             heroSection: document.getElementById("heroSection") as HTMLElement,
             video: document.querySelector("video") as HTMLVideoElement,
-            logo: document.querySelector("img") as HTMLElement,
+            logo: document.getElementById("logo") as HTMLElement,
             heroShadow: document.getElementById("sombra") as HTMLElement,
             arrowDown: document.getElementById("arrow-down") as HTMLElement,
         });
