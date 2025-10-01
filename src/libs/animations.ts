@@ -1,6 +1,6 @@
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Observer } from "gsap/Observer";
+import { Draggable } from "gsap/Draggable";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import type { HeroAnimationsProps, SectionsAnimationsProps } from "./animations.d";
 
@@ -12,7 +12,7 @@ export const setHeroAnimation = (props: HeroAnimationsProps) => Object.assign(He
 export const setSectionsAnimation = (props: SectionsAnimationsProps) => Object.assign(SectionsProps, props);
 
 export const initAnimations = () => {
-    gsap.registerPlugin(ScrollTrigger, Observer, ScrollToPlugin);
+    gsap.registerPlugin(ScrollTrigger, Draggable, ScrollToPlugin);
 
     try {
         initHeroAnimation();
@@ -207,20 +207,66 @@ const initSectionsAnimation = () => {
         }
     }
 
-    // Configuración del Observer para detectar swipes
-    Observer.create({
-        target: main,
-        type: "touch",
-        tolerance: 50,
-        onRight: () => {
-            if (!isAnimating && !isScrolling && currentSection > 0) {
-                goToSection(currentSection - 1);
+    // Configuración del Draggable para hacer el container draggable
+    Draggable.create(container, {
+        type: "x",
+        edgeResistance: 0.65,
+        bounds: {
+            minX: -(container.scrollWidth - main.clientWidth),
+            maxX: 0
+        },
+        inertia: true,
+        onPress: function() {
+            // Desactivar el ScrollTrigger temporalmente
+            if (tl.scrollTrigger) {
+                tl.scrollTrigger.disable();
             }
         },
-        onLeft: () => {
-            if (!isAnimating && !isScrolling && currentSection < sections.length - 1) {
-                goToSection(currentSection + 1);
-            }
+        onDragStart: function() {
+            isAnimating = true;
+        },
+        onDrag: function() {
+            // Actualizar la sección actual basado en la posición
+            const maxScroll = container.scrollWidth - main.clientWidth;
+            const progress = Math.abs(this.x) / maxScroll;
+            currentSection = Math.round(progress * (sections.length - 1));
+        },
+        onDragEnd: function() {
+            // Calcular a qué sección debe ajustarse
+            const maxScroll = container.scrollWidth - main.clientWidth;
+            const progress = currentSection / (sections.length - 1);
+            const targetX = -progress * maxScroll;
+            
+            // Animar al snap de la sección
+            gsap.to(container, {
+                x: targetX,
+                duration: 0.5,
+                ease: "power2.out",
+                onComplete: () => {
+                    // Reactivar el ScrollTrigger y sincronizar el scroll
+                    if (tl.scrollTrigger) {
+                        const targetScroll = gsap.utils.mapRange(
+                            0,
+                            1,
+                            tl.scrollTrigger.start,
+                            tl.scrollTrigger.end,
+                            progress
+                        );
+                        
+                        window.scrollTo(0, targetScroll);
+                        tl.scrollTrigger.enable();
+                    }
+                    isAnimating = false;
+                }
+            });
+        },
+        onRelease: function() {
+            // Si el usuario suelta sin arrastrar mucho, reactivar inmediatamente
+            setTimeout(() => {
+                if (tl.scrollTrigger && !isAnimating) {
+                    tl.scrollTrigger.enable();
+                }
+            }, 100);
         }
     });
 
