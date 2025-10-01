@@ -8,7 +8,10 @@ import imgVer from "@/assets/SpiderLogo2.png";
 
 <div id="modal" class="absolute inset-0 w-svw h-lvh grid z-60">
     <div class="h-full w-full grid place-items-center z-60">
-        <button onclick="" class="translate-y-35 grid place-items-center size-50 md:size-40 lg:size-48 xl:size-56 2xl:size-64"> 
+        <button
+            onclick=""
+            class="translate-y-35 grid place-items-center size-50 boton-pulsar"
+        >
             <Image src={imgVer} alt="Ver" format="webp" />
         </button>
     </div>
@@ -23,6 +26,35 @@ import imgVer from "@/assets/SpiderLogo2.png";
     <audio class="hidden" id="introduccion" src={introduccion}></audio>
     <audio class="hidden" loop id="musica" src={musica}></audio>
 </div>
+
+
+<style>
+    @keyframes pulsar {
+        0% {
+            transform: scale(1) 
+        }
+        4% {
+            transform: scale(1.1)
+        }
+        8% {
+            transform: scale(1)
+        }
+        12% {
+            transform: scale(1.1)
+        }
+        16% {
+            transform: scale(1)
+        }
+        20%, 100% {
+            transform: scale(1)
+        }
+    }
+
+    .boton-pulsar {
+        animation: pulsar 7s ease-in-out infinite;
+        animation-delay: 5s;
+    }
+</style>
 
 <script>
     import { initAnimations } from "@/libs/animations";
