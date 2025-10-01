@@ -3,15 +3,13 @@ import introduccion from "@/assets/audio/introduccionG.mp3";
 import musica from "@/assets/audio/musica.mp3";
 import Image from "astro/components/Image.astro";
 import modalBg from "@/assets/modal_bg.png";
-import Red from "@/assets/red2.svg";
+import imgVer from "@/assets/SpiderLogo2.png";
 ---
 
 <div id="modal" class="absolute inset-0 w-svw h-lvh grid z-60">
     <div class="h-full w-full grid place-items-center z-60">
-        
-        <button onclick="" class="translate-y-28 relative"> 
-            <Red class="absolute inset-0 inline size-60 fill-rose-200" />
-            <h1>ver</h1>
+        <button onclick="" class="translate-y-35 grid place-items-center size-50 md:size-40 lg:size-48 xl:size-56 2xl:size-64"> 
+            <Image src={imgVer} alt="Ver" format="webp" />
         </button>
     </div>
     <Image
