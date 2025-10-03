@@ -52,8 +52,8 @@ const sectionsController: SectionsController = {
             
             gsap.to(window, {
                 scrollTo: targetScroll,
-                duration: 1,
-                ease: "power2.inOut",
+                duration: 0.6, // Reducido de 1 a 0.6 para navegación más rápida
+                ease: "power2.out", // Cambiado para inicio más rápido
                 onComplete: () => {
                     this.isAnimating = false;
                 }
@@ -95,7 +95,7 @@ const sectionsController: SectionsController = {
         
         this.scrollTimeout = setTimeout(() => {
             this.isScrolling = false;
-        }, 150) as unknown as number;
+        }, 100) as unknown as number; // Reducido de 150ms a 100ms para mayor responsividad
     },
     
     // Método de inicialización
@@ -126,7 +126,7 @@ const sectionsController: SectionsController = {
                 trigger: main,
                 start: "top top",
                 end: () => `+=${container.scrollWidth - main.clientWidth}`,
-                scrub: 1,
+                scrub: 0.5, // Reducido de 1 a 0.5 para más responsividad
                 pin: true,
                 anticipatePin: 1,
                 invalidateOnRefresh: true,
@@ -135,8 +135,9 @@ const sectionsController: SectionsController = {
                         this.currentSection = this.getNearestSection(value);
                         return this.currentSection / (this.sectionsLength - 1);
                     },
-                    duration: 0.5,
-                    ease: "power2.inOut",
+                    duration: 0.3, // Reducido de 0.5 a 0.3 para snap más rápido
+                    ease: "power2.out", // Cambiado a "out" para inicio más rápido
+                    delay: 0.1, // Añadido delay mínimo para evitar snaps muy agresivos
                     directional: false
                 }
             },
@@ -149,7 +150,7 @@ const sectionsController: SectionsController = {
         Observer.create({
             target: main,
             type: "touch",
-            tolerance: 50,
+            tolerance: 30, // Reducido de 50 a 30 para mayor sensibilidad
             onRight: () => {
                 if (!this.isAnimating && !this.isScrolling && this.currentSection > 0) {
                     this.goToNearestSection('prev');
