@@ -14,20 +14,10 @@ import edificios from "../assets/edificios.png";
         class="w-full flex-1  z-10 flex bg-repeat-x bg-bottom"
         style={`background-image: url(${edificios.src});`}
     >
-        <section>seccion 2</section>
-        <section>seccion 2</section>
-        <section>seccion 2</section>
-        <section>seccion 2</section>
+        <slot/>
     </div>
 </main>
 
-<style>
-    section {
-        width: 100vw;
-        display: grid;
-        place-items: center;
-    }
-</style>
 <script>
     import { setSectionsAnimation } from "@/libs/animations";
 

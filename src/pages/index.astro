@@ -1,13 +1,18 @@
 ---
-
 import Modal from '@/components/Modal.astro';
 import Hero from '@/components/Hero.astro';
 import Sections from '@/components/Sections.astro';
 import Layout from '@/layouts/Layout.astro';
+import { Fecha, Fin, Lugar, Presentacion } from '@/components/sections';
 ---
 
 <Layout>
 	<Modal />
 	<Hero />
-	<Sections />
+	<Sections>
+		<Presentacion />
+		<Fecha />
+		<Lugar />
+		<Fin />
+	</Sections>
 </Layout>
