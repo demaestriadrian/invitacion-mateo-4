@@ -2,21 +2,199 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Observer } from "gsap/Observer";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-import type { HeroAnimationsProps, SectionsAnimationsProps } from "./animations.d";
+import type { HeroAnimationsProps, SectionsAnimationsProps, SectionsController } from "./animations.d";
 
 const HeroProps = {} as HeroAnimationsProps;
 const SectionsProps = {} as SectionsAnimationsProps;
 
+// Controlador de secciones que encapsula toda la lógica de navegación
+const sectionsController: SectionsController = {
+    // Variables de estado
+    currentSection: 0,
+    isAnimating: false,
+    isScrolling: false,
+    sectionsLength: 0,
+    timeline: null,
+    scrollTimeout: 0,
+    
+    // Propiedades del DOM
+    props: {},
+    
+    // Método para verificar si está inicializado
+    isInitialized() {
+        return this.sectionsLength > 0 && this.timeline !== null;
+    },
+    
+    // Función para detectar la sección más cercana basada en el progreso del scroll
+    getNearestSection(progress: number): number {
+        if (this.sectionsLength === 0) return 0;
+        const sectionProgress = progress * (this.sectionsLength - 1);
+        return Math.round(sectionProgress);
+    },
+    
+    // Función para navegar a una sección específica
+    goToSection(index: number) {
+        if (this.isAnimating || !this.timeline || this.sectionsLength === 0) return;
+        
+        this.isAnimating = true;
+        
+        const progress = index / (this.sectionsLength - 1);
+        const scrollTrigger = this.timeline.scrollTrigger;
+        
+        if (scrollTrigger) {
+            const targetScroll = gsap.utils.mapRange(
+                0, 
+                1, 
+                scrollTrigger.start, 
+                scrollTrigger.end, 
+                progress
+            );
+            
+            gsap.to(window, {
+                scrollTo: targetScroll,
+                duration: 1,
+                ease: "power2.inOut",
+                onComplete: () => {
+                    this.isAnimating = false;
+                }
+            });
+        }
+    },
+    
+    // Función para navegar a la sección más cercana en una dirección específica
+    goToNearestSection(direction: 'next' | 'prev' | 'current' | number = 'current') {
+        if (this.isAnimating || this.sectionsLength === 0) return;
+        
+        let targetSection: number;
+        
+        if (typeof direction === 'number') {
+            // Ir a una sección específica
+            targetSection = Math.max(0, Math.min(direction, this.sectionsLength - 1));
+        } else {
+            switch (direction) {
+                case 'next':
+                    targetSection = Math.min(this.currentSection + 1, this.sectionsLength - 1);
+                    break;
+                case 'prev':
+                    targetSection = Math.max(this.currentSection - 1, 0);
+                    break;
+                case 'current':
+                default:
+                    targetSection = this.currentSection;
+                    break;
+            }
+        }
+        
+        this.goToSection(targetSection);
+    },
+    
+    // Función para detectar cuando el scroll termina
+    handleScroll() {
+        this.isScrolling = true;
+        clearTimeout(this.scrollTimeout);
+        
+        this.scrollTimeout = setTimeout(() => {
+            this.isScrolling = false;
+        }, 150) as unknown as number;
+    },
+    
+    // Método de inicialización
+    init() {
+        if (!this.props.main || !this.props.container || !this.props.sections) {
+            throw new Error("Sections animation elements are not properly set.");
+        }
+
+        const { main, container, sections } = this.props;
+        const numSections = sections.length;
+        
+        // Actualizar variables de estado
+        this.sectionsLength = numSections;
+        this.currentSection = 0;
+        this.isAnimating = false;
+        this.isScrolling = false;
+
+        // Agregar detector de scroll
+        window.addEventListener('scroll', () => this.handleScroll());
+
+        container.style.width = `${numSections * 100}vw`;
+        container.style.backgroundSize = `calc(115% / ${numSections}) auto`;
+
+        const tl = gsap.to(container, {
+            x: () => `-${container.scrollWidth - main.clientWidth}px`,
+            ease: "none",
+            scrollTrigger: {
+                trigger: main,
+                start: "top top",
+                end: () => `+=${container.scrollWidth - main.clientWidth}`,
+                scrub: 1,
+                pin: true,
+                anticipatePin: 1,
+                invalidateOnRefresh: true,
+                snap: {
+                    snapTo: (value) => {
+                        this.currentSection = this.getNearestSection(value);
+                        return this.currentSection / (this.sectionsLength - 1);
+                    },
+                    duration: 0.5,
+                    ease: "power2.inOut",
+                    directional: false
+                }
+            },
+        });
+
+        // Guardar referencia al timeline
+        this.timeline = tl;
+
+        // Configuración del Observer para detectar swipes
+        Observer.create({
+            target: main,
+            type: "touch",
+            tolerance: 50,
+            onRight: () => {
+                if (!this.isAnimating && !this.isScrolling && this.currentSection > 0) {
+                    this.goToNearestSection('prev');
+                }
+            },
+            onLeft: () => {
+                if (!this.isAnimating && !this.isScrolling && this.currentSection < this.sectionsLength - 1) {
+                    this.goToNearestSection('next');
+                }
+            }
+        });
+    },
+    
+    // Método de destrucción/limpieza
+    destroy() {
+        window.removeEventListener('scroll', () => this.handleScroll());
+        clearTimeout(this.scrollTimeout);
+        this.timeline = null;
+        this.sectionsLength = 0;
+        this.currentSection = 0;
+        this.isAnimating = false;
+        this.isScrolling = false;
+        this.props = {};
+    }
+};
+
+// Variable global para acceso externo al controlador
+let sectionsNavigator: ((direction: 'next' | 'prev' | 'current' | number) => void) | null = null;
+
 export const setHeroAnimation = (props: HeroAnimationsProps) => Object.assign(HeroProps, props);
 
-export const setSectionsAnimation = (props: SectionsAnimationsProps) => Object.assign(SectionsProps, props);
+export const setSectionsAnimation = (props: SectionsAnimationsProps) => {
+    Object.assign(SectionsProps, props);
+    sectionsController.props = props;
+};
+
+// Función para acceder al controlador de secciones (útil para debugging o control externo)
+export const getSectionsController = () => sectionsController;
 
 export const initAnimations = () => {
     gsap.registerPlugin(ScrollTrigger, Observer, ScrollToPlugin);
 
     try {
+        initSectionsAnimation(); // Primero inicializar las secciones para tener disponible el navigator
         initHeroAnimation();
-        initSectionsAnimation();
     } catch (error) {
         console.error("Error initializing animations:", error);
     }
@@ -112,121 +290,41 @@ const initHeroAnimation = () => {
     });
 
     arrowDown.addEventListener("click", () => {
-        // usar gsap para hacer scroll suave a la primer seccion
-        gsap.to(window, {
-            scrollTo: {
-                y: "#mainSection",
-                autoKill: false
-            },
-            duration: 1,
-            ease: "power2.inOut"
-        });
+        // Usar la función unificada para ir a la primera sección (sección 0)
+        if (sectionsNavigator) {
+            sectionsNavigator(0);
+        } else {
+            // Fallback al comportamiento anterior si el navigator no está disponible
+            gsap.to(window, {
+                scrollTo: {
+                    y: "#mainSection",
+                    autoKill: false
+                },
+                duration: 1,
+                ease: "power2.inOut"
+            });
+        }
     })
 
     video.play();
 }
 
 const initSectionsAnimation = () => {
-    if (!SectionsProps.main || !SectionsProps.container || !SectionsProps.sections)
-        throw new Error("Sections animation elements are not properly set.");
-
-    const { main, container, sections } = SectionsProps;
-    const numSections = sections.length;
-    // Variables de control
-    let currentSection = 0;
-    let isAnimating = false;
-    let isScrolling = false;
-    let scrollTimeout: number;
-
-    // Función para detectar cuando el scroll termina
-    const handleScroll = () => {
-        isScrolling = true;
-        clearTimeout(scrollTimeout);
+    try {
+        // Inicializar el controlador de secciones
+        sectionsController.init();
         
-        scrollTimeout = setTimeout(() => {
-            isScrolling = false;
-        }, 150) as unknown as number; // tiempo en ms para considerar que el scroll terminó
-    };
-
-    // Agregar detector de scroll
-    window.addEventListener('scroll', handleScroll);
-
-    container.style.width = `${numSections * 100}vw`;
-    container.style.backgroundSize = `calc(115% / ${numSections}) auto`;
-
-    const tl = gsap.to(container, {
-        x: () => `-${container.scrollWidth - main.clientWidth}px`,
-        ease: "none",
-        scrollTrigger: {
-            trigger: main,
-            start: "top top",
-            end: () => `+=${container.scrollWidth - main.clientWidth}`,
-            scrub: 1,
-            pin: true,
-            anticipatePin: 1,
-            invalidateOnRefresh: true,
-            snap: {
-                snapTo: (value) => {
-                    let progress = value * (sections.length - 1);
-                    currentSection = Math.round(progress);
-                    return currentSection / (sections.length - 1);
-                },
-                duration: 0.5,
-                ease: "power2.inOut",
-                directional: false
-            }
-        },
-    });
-
-    // Función para navegar a una sección específica
-    function goToSection(index: number) {
-        if (isAnimating) return; // Si está animando, no hacer nada
+        // Hacer la función de navegación disponible globalmente
+        sectionsNavigator = sectionsController.goToNearestSection.bind(sectionsController);
         
-        isAnimating = true; // Activar el flag de animación
+        // Limpiar recursos cuando el componente se desmonte
+        document.addEventListener('astro:unmount', () => {
+            sectionsController.destroy();
+            sectionsNavigator = null;
+        });
         
-        const progress = index / (sections.length - 1);
-        const scrollTrigger = tl.scrollTrigger;
-        
-        if (scrollTrigger) {
-            const targetScroll = gsap.utils.mapRange(
-                0, 
-                1, 
-                scrollTrigger.start, 
-                scrollTrigger.end, 
-                progress
-            );
-            
-            gsap.to(window, {
-                scrollTo: targetScroll,
-                duration: 1,
-                ease: "power2.inOut",
-                onComplete: () => {
-                    isAnimating = false; // Desactivar el flag cuando termina
-                }
-            });
-        }
+    } catch (error) {
+        console.error("Error initializing sections animation:", error);
+        throw error;
     }
-
-    // Configuración del Observer para detectar swipes
-    Observer.create({
-        target: main,
-        type: "touch",
-        tolerance: 50,
-        onRight: () => {
-            if (!isAnimating && !isScrolling && currentSection > 0) {
-                goToSection(currentSection - 1);
-            }
-        },
-        onLeft: () => {
-            if (!isAnimating && !isScrolling && currentSection < sections.length - 1) {
-                goToSection(currentSection + 1);
-            }
-        }
-    });
-
-    // Limpiar el event listener cuando el componente se desmonte
-    document.addEventListener('astro:unmount', () => {
-        window.removeEventListener('scroll', handleScroll);
-        clearTimeout(scrollTimeout);
-    });
 }
