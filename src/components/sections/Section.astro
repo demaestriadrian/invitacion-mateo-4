@@ -1,12 +1,8 @@
 ---
+const { className } = Astro.props;
 ---
-<section>
+
+<section class={`${className} p-4 flex flex-col w-dvw h-full items-center`}>
     <slot />
 </section>
-<style>
-    section {
-        width: 100vw;
-        display: grid;
-        place-items: center;
-    }
-</style>
+
