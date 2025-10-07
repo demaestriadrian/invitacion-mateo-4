@@ -2,4 +2,37 @@
 import Section from "./Section.astro";
 ---
 
-<Section>Fecha</Section>
+<Section>
+    <h2 class="text-2xl">
+        3 <span class="text-xl">de</span> Noviembre
+    </h2>
+    <p class="section-text">de 18:00Hs a 21:00Hs</p>
+
+    <h3>
+        Solo faltan <span id="days">3</span> días y <span id="hours">2</span> horas
+        para disfrutar de la misión
+    </h3>
+</Section>
+
+<script>
+    const S = 1000;
+    const M = S * 60;
+    const H = M * 60;
+    const D = H * 24;
+    const eventDate = new Date("2025-11-03T18:00:00-03:00").getTime();
+
+    const $hours = document.getElementById("hours");
+    const $days = document.getElementById("days");
+
+    const now = Date.now();
+    const diff = eventDate - now;
+
+    const days = Math.floor(diff / D);
+    const hours = Math.floor((diff % D) / H);
+
+    if ($days!==null && $hours!==null) {
+        $days.innerText = days.toString();
+        $hours.innerText = hours.toString();
+    }
+
+</script>
