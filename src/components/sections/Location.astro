@@ -1,5 +1,11 @@
 ---
 import Section from "./Section.astro";
+import stylo from "@/assets/stylo.png";
+import { Image } from "astro:assets";
 ---
 
-<Section>Lugar</Section>
+<Section>
+    <h2 class="text-2xl">Lugar</h2>
+    <p class="section-text">Calle Falsa 123, Ciudad</p>
+    <Image src={stylo} alt="Logotipo de Stylo" format="webp" />
+</Section>
