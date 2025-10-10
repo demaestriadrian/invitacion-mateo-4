@@ -1,2 +1,24 @@
 @import "tailwindcss";
 
+/* Definición directa de fuentes personalizadas */
+@layer utilities {
+  .font-bigelow {
+    font-family: "Bigelow Rules", cursive;
+  }
+  
+  .font-chicle {
+    font-family: "Chicle", cursive;
+  }
+  
+  .font-mogra {
+    font-family: "Mogra", cursive;
+  }
+  
+  .font-pacifico {
+    font-family: "Pacifico", cursive;
+  }
+  
+  .font-vibur {
+    font-family: "Vibur", cursive;
+  }
+}
