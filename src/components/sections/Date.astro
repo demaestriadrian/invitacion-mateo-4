@@ -1,12 +1,16 @@
 ---
 import Section from "./Section.astro";
+import peter from "@/assets/peter-paker-dancing.webm";
 ---
 
-<Section>
+<Section className="relative">
     <h2 class="text-2xl">
         3 <span class="text-xl">de</span> Noviembre
     </h2>
     <p class="section-text">de 18:00Hs a 21:00Hs</p>
+    <video autoplay loop muted playsinline class="w-[150%] absolute left-0  bottom-20 -translate-x-1/6 mx-auto my-4">
+        <source src={peter} type="video/webm" />
+        Your browser does not support the video tag.
 
     <h3>
         Solo faltan <span id="days">3</span> días y <span id="hours">2</span> horas
@@ -24,15 +28,19 @@ import Section from "./Section.astro";
     const $hours = document.getElementById("hours");
     const $days = document.getElementById("days");
 
-    const now = Date.now();
-    const diff = eventDate - now;
+    const updateTimer = () => {
+        const now = Date.now();
+        const diff = eventDate - now;
 
-    const days = Math.floor(diff / D);
-    const hours = Math.floor((diff % D) / H);
+        const days = Math.floor(diff / D);
+        const hours = Math.floor((diff % D) / H);
 
-    if ($days!==null && $hours!==null) {
-        $days.innerText = days.toString();
-        $hours.innerText = hours.toString();
-    }
+        if ($days !== null && $hours !== null) {
+            $days.innerText = days.toString();
+            $hours.innerText = hours.toString();
+        }
+    };
 
+    updateTimer();
+    setInterval(updateTimer, 2000);
 </script>
