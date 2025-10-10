@@ -1,5 +1,61 @@
 ---
 import Section from "./Section.astro";
+import whatsapp from "@/assets/wspweb.png";
+import { Image } from "astro:assets";
+import Arrowdown from "@/assets/arrow.svg"
 ---
 
-<Section>Confirmar Asistencia</Section>
+<Section className="px-10 pt-16 text-center justify-between">
+    <h3 class="font-vibur text-4xl">¡El hombre araña necesita saber cuántos superhéroes van a unirse a su misión!</h3>
+    <div class="font-chicle tracking-wider">
+        <h2>Envíanos un mensaje a través de WhatsApp.</h2>
+        <h2>Y confirmar tu asistencia</h2>
+        <Arrowdown class="w-10 h-10 m-auto mt-4 animate-bounce"/>
+        
+    </div>
+    <a id="icon-wsp" href="https://wa.me/5492252447533" target="_blank" rel="noopener noreferrer">
+        <Image src={whatsapp} alt="WhatsApp" format="webp" class="inline size-36 mb-10"/>
+    </a>
+</Section>
+
+<script>
+    import gsap from "gsap";
+    const iconWsp = document.getElementById('icon-wsp');
+    
+    if (iconWsp) {
+        // Función para crear el efecto de vibración con rotación
+        const vibrateEffect = () => {
+            const tl = gsap.timeline();
+            
+            tl.to(iconWsp, {
+                rotation: -5,
+                duration: 0.1,
+                ease: "power2.inOut"
+            })
+            .to(iconWsp, {
+                rotation: 5,
+                duration: 0.1,
+                ease: "power2.inOut"
+            })
+            .to(iconWsp, {
+                rotation: -5,
+                duration: 0.1,
+                ease: "power2.inOut"
+            })
+            .to(iconWsp, {
+                rotation: 5,
+                duration: 0.1,
+                ease: "power2.inOut"
+            })
+            .to(iconWsp, {
+                rotation: 0,
+                duration: 0.1,
+                ease: "power2.inOut"
+            });
+        };
+        
+        // Ejecutar la vibración cada 5 segundos
+        vibrateEffect(); // Primera ejecución inmediata
+        setInterval(vibrateEffect, 5000);
+    }
+</script>
