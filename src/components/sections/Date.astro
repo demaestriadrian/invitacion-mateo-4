@@ -3,26 +3,40 @@ import Section from "./Section.astro";
 import peter from "@/assets/peter-paker-dancing.webm";
 ---
 
-<Section className="relative">
-    <h2 class="text-2xl">
-        3 <span class="text-xl">de</span> Noviembre
-    </h2>
-    <p class="section-text">de 18:00Hs a 21:00Hs</p>
-    <video autoplay loop muted playsinline class="w-[150%] absolute left-0  bottom-20 -translate-x-1/6 mx-auto my-4">
-        <source src={peter} type="video/webm" />
-        Your browser does not support the video tag.
-
-    <h3>
-        Solo faltan <span id="days">3</span> días y <span id="hours">2</span> horas
-        para disfrutar de la misión
-    </h3>
+<Section className="relative h-full font-chicle justify-between px-0">
+    <div>
+        <h2 class="text-6xl font-bold mt-6">
+            3 <span class="text-4xl">de</span> Noviembre
+        </h2>
+    </div>
+    <div class="flex-2 text-center flex flex-col justify-evenly text-5xl w-3/5">
+        <p class="text-start">
+            <span class="text-3xl">de</span> 18:00Hs
+        </p>
+        <p class="text-end">
+            <span class="text-3xl">a</span> 21:00Hs
+        </p>
+    </div>
+    <div class="w-full flex-3 flex flex-col text-5xl mt-6 text-start">
+        <h3 class="px-4">Solo faltan</h3>
+        <div class="flex-1 flex w-full">
+            <div class="flex-2"></div>
+            <div class="flex-1 flex flex-col gap-10 mt-8">
+                <div><span id="days">3</span> días</div>
+                <div><span id="hours">2</span> horas</div>
+            </div>
+        </div>
+    </div>    
+    <div class="absolute left-0 -bottom-3 h-1/2 w-7/12 overflow-hidden">
+        <video autoplay loop muted playsinline class="h-full object-cover mx-auto my-4">
+            <source src={peter} type="video/webm" />
+            Your browser does not support the video tag.
+        </video>
+    </div>
 </Section>
 
 <script>
-    const S = 1000;
-    const M = S * 60;
-    const H = M * 60;
-    const D = H * 24;
+    const S = 1000, M = S * 60, H = M * 60, D = H * 24;
     const eventDate = new Date("2025-11-03T18:00:00-03:00").getTime();
 
     const $hours = document.getElementById("hours");
