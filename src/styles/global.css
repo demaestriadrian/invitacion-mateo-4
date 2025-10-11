@@ -1,24 +1,181 @@
 @import "tailwindcss";
 
-/* Definición directa de fuentes personalizadas */
-@layer utilities {
-  .font-bigelow {
-    font-family: "Bigelow Rules", cursive;
-  }
+/* ===== FUENTES LOCALES ===== */
+/* Bigelow Rules */
+@font-face {
+  font-family: "Bigelow Rules";
+  src: url("/fonts/BigelowRules-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Chicle */
+@font-face {
+  font-family: "Chicle";
+  src: url("/fonts/Chicle-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Mogra */
+@font-face {
+  font-family: "Mogra";
+  src: url("/fonts/Mogra-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Pacifico */
+@font-face {
+  font-family: "Pacifico";
+  src: url("/fonts/Pacifico-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Vibur */
+@font-face {
+  font-family: "Vibur";
+  src: url("/fonts/Vibur-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bangers */
+@font-face {
+  font-family: "Bangers";
+  src: url("/fonts/Bangers-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Action Man - Familia completa */
+@font-face {
+  font-family: "Action Man";
+  src: url("/fonts/Action Man.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Action Man";
+  src: url("/fonts/Action Man Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Action Man";
+  src: url("/fonts/Action Man Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Action Man";
+  src: url("/fonts/Action Man Bold Italic.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Action Man Extended - Familia extendida */
+@font-face {
+  font-family: "Action Man Extended";
+  src: url("/fonts/Action Man Extended.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Action Man Extended";
+  src: url("/fonts/Action Man Extended Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Action Man Extended";
+  src: url("/fonts/Action Man Extended Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Action Man Extended";
+  src: url("/fonts/Action Man Extended Bold Italic.ttf") format("truetype");
+  font-weight: bold;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Fuzzy Bubbles - Familia completa */
+@font-face {
+  font-family: "Fuzzy Bubbles";
+  src: url("/fonts/FuzzyBubbles-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Fuzzy Bubbles";
+  src: url("/fonts/FuzzyBubbles-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Comic Sans MS - Familia completa */
+@font-face {
+  font-family: "Comic Sans MS";
+  src: url("/fonts/COMIC.TTF") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Comic Sans MS";
+  src: url("/fonts/comici.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Comic Sans MS";
+  src: url("/fonts/comicz.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Configuración de fuentes en Tailwind CSS v4 */
+@theme {
+  /* Fuentes principales del proyecto */
+  --font-bigelow: "Bigelow Rules", cursive;
+  --font-chicle: "Chicle", cursive;
+  --font-mogra: "Mogra", cursive;
+  --font-pacifico: "Pacifico", cursive;
+  --font-vibur: "Vibur", cursive;
   
-  .font-chicle {
-    font-family: "Chicle", cursive;
-  }
-  
-  .font-mogra {
-    font-family: "Mogra", cursive;
-  }
-  
-  .font-pacifico {
-    font-family: "Pacifico", cursive;
-  }
-  
-  .font-vibur {
-    font-family: "Vibur", cursive;
-  }
+  /* Fuentes adicionales disponibles */
+  --font-bangers: "Bangers", cursive;
+  --font-action: "Action Man", sans-serif;
+  --font-action-extended: "Action Man Extended", sans-serif;
+  --font-fuzzy: "Fuzzy Bubbles", cursive;
+  --font-comic: "Comic Sans MS", cursive;
 }

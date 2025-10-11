@@ -9,5 +9,14 @@
     "typescript",
     "typescriptreact",
     "astro" // ✨ ¡AÑADIR ESTA LÍNEA!
+  ],
+  "css.validate": false,
+  "less.validate": false,
+  "scss.validate": false,
+  "tailwindCSS.includeLanguages": {
+    "astro": "html"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["class:list\\s*=\\s*([\"'`])([^\\1]*?)\\1", "[\"'`]([^\"'`]*)[\"'`]"]
   ]
 }
