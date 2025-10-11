@@ -1,5 +1,24 @@
 ---
 import Section from "./Section.astro";
+import spiderman from "@/assets/spiderman.png";
+import { Image } from "astro:assets";
 ---
 
-<Section>Fin</Section>
+<Section id="end" className="relative overflow-hidden flex-col-reverse">
+    <Image 
+        id="spiderman" 
+        src={spiderman} 
+        format="webp" 
+        alt="Spiderman"
+        class="absolute -top-15 mx-auto w-7/12 hidden" 
+    />
+
+    <h2 class="font-chicle text-6xl text-center tracking-wider">
+        Te esperamos <br>
+        para <br>
+        Saltar, Reír <br>
+        bailar y <br>
+        Jugar
+    </h2>
+    
+</Section>

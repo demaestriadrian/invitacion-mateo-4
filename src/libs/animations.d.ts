@@ -13,6 +13,11 @@ export type SectionsAnimationsProps = {
     sections?: HTMLElement[];
 }
 
+export type SpidermanAnimationsProps = {
+    spidermanElement?: HTMLElement;
+    hasAnimated?: boolean;
+}
+
 export type SectionsController = {
     // Variables de estado
     currentSection: number;
@@ -37,4 +42,7 @@ export type SectionsController = {
     
     // Método para verificar si está inicializado
     isInitialized: () => boolean;
+    
+    // Método para detectar y animar elementos especiales
+    checkSpecialAnimations: () => void;
 }

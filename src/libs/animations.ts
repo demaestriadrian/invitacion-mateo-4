@@ -2,10 +2,11 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Observer } from "gsap/Observer";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-import type { HeroAnimationsProps, SectionsAnimationsProps, SectionsController } from "./animations.d";
+import type { HeroAnimationsProps, SectionsAnimationsProps, SpidermanAnimationsProps, SectionsController } from "./animations.d";
 
 const HeroProps = {} as HeroAnimationsProps;
 const SectionsProps = {} as SectionsAnimationsProps;
+const SpidermanProps = {} as SpidermanAnimationsProps;
 
 // Controlador de secciones que encapsula toda la lógica de navegación
 const sectionsController: SectionsController = {
@@ -98,6 +99,21 @@ const sectionsController: SectionsController = {
         }, 100) as unknown as number; // Reducido de 150ms a 100ms para mayor responsividad
     },
     
+    // Método para detectar y animar elementos especiales en la sección activa
+    checkSpecialAnimations() {
+        if (!this.props.sections || this.sectionsLength === 0) return;
+        
+        const currentSectionElement = this.props.sections[this.currentSection];
+        if (!currentSectionElement) return;
+        
+        // Buscar elemento Spiderman en la sección activa
+        const spidermanElement = currentSectionElement.querySelector('#spiderman') as HTMLElement;
+        if (spidermanElement && !SpidermanProps.hasAnimated) {
+            initSpidermanAnimation(spidermanElement);
+            SpidermanProps.hasAnimated = true;
+        }
+    },
+    
     // Método de inicialización
     init() {
         if (!this.props.main || !this.props.container || !this.props.sections) {
@@ -133,6 +149,10 @@ const sectionsController: SectionsController = {
                 snap: {
                     snapTo: (value) => {
                         this.currentSection = this.getNearestSection(value);
+                        // Ejecutar detección de animaciones especiales cuando cambie de sección
+                        setTimeout(() => {
+                            this.checkSpecialAnimations();
+                        }, 100); // Pequeño delay para asegurar que la sección esté visible
                         return this.currentSection / (this.sectionsLength - 1);
                     },
                     duration: 0.3, // Reducido de 0.5 a 0.3 para snap más rápido
@@ -174,6 +194,8 @@ const sectionsController: SectionsController = {
         this.isAnimating = false;
         this.isScrolling = false;
         this.props = {};
+        // Resetear estado de Spiderman
+        SpidermanProps.hasAnimated = false;
     }
 };
 
@@ -187,8 +209,31 @@ export const setSectionsAnimation = (props: SectionsAnimationsProps) => {
     sectionsController.props = props;
 };
 
+export const setSpidermanAnimation = (props: SpidermanAnimationsProps) => Object.assign(SpidermanProps, props);
+
 // Función para acceder al controlador de secciones (útil para debugging o control externo)
 export const getSectionsController = () => sectionsController;
+
+// Función para inicializar la animación de Spiderman
+const initSpidermanAnimation = (spidermanElement: HTMLElement) => {
+    // Remover la clase hidden para que sea visible durante la animación
+    spidermanElement.classList.remove('hidden');
+    
+    // Configurar estado inicial de la imagen
+    gsap.set(spidermanElement, {
+        y: -200, // Posición inicial arriba de la pantalla
+        opacity: 0
+    });
+
+    // Ejecutar animación con efecto elástico
+    gsap.to(spidermanElement, {
+        y: 0, // Posición final
+        opacity: 1,
+        duration: 1.5,
+        ease: "elastic.out(1, 0.5)", // Efecto elástico
+        delay: 0.2 // Pequeño delay para mejorar la percepción
+    });
+};
 
 export const initAnimations = () => {
     gsap.registerPlugin(ScrollTrigger, Observer, ScrollToPlugin);
