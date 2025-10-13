@@ -1,5 +1,22 @@
 @import "tailwindcss";
 
+/* Configuración de fuentes en Tailwind CSS v4 */
+@theme {
+  /* Fuentes principales del proyecto */
+  --font-bigelow: "Bigelow Rules", cursive;
+  --font-chicle: "Chicle", cursive;
+  --font-mogra: "Mogra", cursive;
+  --font-pacifico: "Pacifico", cursive;
+  --font-vibur: "Vibur", cursive;
+  
+  /* Fuentes adicionales disponibles */
+  --font-bangers: "Bangers", cursive;
+  --font-action: "Action Man", sans-serif;
+  --font-action-extended: "Action Man Extended", sans-serif;
+  --font-fuzzy: "Fuzzy Bubbles", cursive;
+  --font-comic: "Comic Sans MS", cursive;
+}
+
 /* ===== FUENTES LOCALES ===== */
 /* Bigelow Rules */
 @font-face {
@@ -163,19 +180,3 @@
   font-display: swap;
 }
 
-/* Configuración de fuentes en Tailwind CSS v4 */
-@theme {
-  /* Fuentes principales del proyecto */
-  --font-bigelow: "Bigelow Rules", cursive;
-  --font-chicle: "Chicle", cursive;
-  --font-mogra: "Mogra", cursive;
-  --font-pacifico: "Pacifico", cursive;
-  --font-vibur: "Vibur", cursive;
-  
-  /* Fuentes adicionales disponibles */
-  --font-bangers: "Bangers", cursive;
-  --font-action: "Action Man", sans-serif;
-  --font-action-extended: "Action Man Extended", sans-serif;
-  --font-fuzzy: "Fuzzy Bubbles", cursive;
-  --font-comic: "Comic Sans MS", cursive;
-}
