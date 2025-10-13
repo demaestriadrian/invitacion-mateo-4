@@ -1,32 +1,38 @@
 ---
 import Section from "./Section.astro";
 import peter from "@/assets/video/peter-paker-dancing.webm";
+import dialog from "@/assets/dialog/dialogo-pensamiento.png";
+import { Image } from "astro:assets";
+
 ---
 
-<Section className="relative h-full font-chicle justify-between px-0">
+<Section className="relative h-full font-chicle justify-between px-0 pt-[5vh]">
+    <!-- Fecha -->
     <div>
         <h2 class="text-6xl font-bold mt-6">
             3 <span class="text-4xl">de</span> Noviembre
         </h2>
     </div>
-    <div class="flex-2 text-center flex flex-col justify-evenly text-5xl w-3/5">
-        <p class="text-start">
-            <span class="text-3xl">de</span> 18:00Hs
-        </p>
-        <p class="text-end">
-            <span class="text-3xl">a</span> 21:00Hs
+    <!-- Dialogo de pensamiento -->
+    <div class="relative">
+        <Image src={dialog} alt="Dialogo de pensamiento" class="w-4/5 mx-auto rotate-12 translate-y-3 -translate-x-3" />
+        <p class="
+        absolute w-2/5 max-h-25 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-2
+        text-black  font-anime-ace italic text-base  text-center overflow-hidden">
+           Solo faltan <span id="days" class="font-bold text-2xl">2</span> días para la gran fiesta. 
         </p>
     </div>
-    <div class="w-full flex-3 flex flex-col text-5xl mt-6 text-start">
-        <h3 class="px-4">Solo faltan</h3>
-        <div class="flex-1 flex w-full">
-            <div class="flex-2"></div>
-            <div class="flex-1 flex flex-col gap-10 mt-8">
-                <div><span id="days">3</span> días</div>
-                <div><span id="hours">2</span> horas</div>
-            </div>
-        </div>
-    </div>    
+    <!-- Horario -->
+    <div class="flex-2 text-start flex flex-col text-5xl w-5/12 self-end font-komika-title">
+        <p class="">
+            <span class="pl-4 text-3xl">de</span> <br>
+            18:00Hs
+        </p>
+        <p class="">
+            <span class="pl-4 text-3xl">a</span> <br>
+            21:00Hs
+        </p>
+    </div>
     <div class="absolute left-0 -bottom-3 h-1/2 w-7/12 overflow-hidden">
         <video autoplay loop muted playsinline class="h-full object-cover mx-auto my-4">
             <source src={peter} type="video/webm" />
@@ -34,6 +40,14 @@ import peter from "@/assets/video/peter-paker-dancing.webm";
         </video>
     </div>
 </Section>
+
+<style>
+    .font-komika-title {
+        -webkit-text-stroke: 1px black;
+        text-stroke: 1px black;
+        text-shadow: 2px 2px 1px black;
+    }
+</style>
 
 <script>
     const S = 1000, M = S * 60, H = M * 60, D = H * 24;
@@ -49,10 +63,10 @@ import peter from "@/assets/video/peter-paker-dancing.webm";
         const days = Math.floor(diff / D);
         const hours = Math.floor((diff % D) / H);
 
-        if ($days !== null && $hours !== null) {
-            $days.innerText = days.toString();
-            $hours.innerText = hours.toString();
-        }
+        if ($days !== null) $days.innerText = days.toString();
+        
+        if ($hours !== null) $hours.innerText = hours.toString();
+        
     };
 
     updateTimer();
