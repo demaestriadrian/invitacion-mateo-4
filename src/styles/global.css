@@ -2,23 +2,32 @@
 
 /* Configuración de fuentes en Tailwind CSS v4 */
 @theme {
-  /* Fuentes principales del proyecto */
+  --font-action: "Action Man", sans-serif;
+  --font-action-extended: "Action Man Extended", sans-serif;
+  --font-action-shaded: "Action Man Shaded", sans-serif;
+  --font-anime-ace: "Anime Ace 2", cursive;
+  --font-back-issues: "Back Issues BB", cursive;
+  --font-badaboom: "Badaboom BB", cursive;
+  --font-bangers: "Bangers", cursive;
   --font-bigelow: "Bigelow Rules", cursive;
+  --font-cc-mighty-mouth: "CC Mighty Mouth", cursive;
+  --font-cc-meanwhile: "CC Meanwhile", cursive;
+  --font-cc-meanwhile-uncial: "CC Meanwhile Uncial", cursive;
+  --font-cc-wild-words: "CC Wild Words", cursive;
   --font-chicle: "Chicle", cursive;
+  --font-comic: "Comic Sans MS", cursive;
+  --font-comic-3: "Comic Sans MS 3", cursive;
+  --font-comic-graffiti: "Comic Sans Graffiti", cursive;
+  --font-digistrip: "Digistrip", cursive;
+  --font-fuzzy: "Fuzzy Bubbles", cursive;
+  --font-komika-title: "Komika Title", cursive;
+  --font-komika-title-kaps: "Komika Title Kaps", cursive;
+  --font-komika-title-tight: "Komika Title Tight", cursive;
   --font-mogra: "Mogra", cursive;
   --font-pacifico: "Pacifico", cursive;
   --font-vibur: "Vibur", cursive;
-  
-  /* Fuentes adicionales disponibles */
-  --font-bangers: "Bangers", cursive;
-  --font-action: "Action Man", sans-serif;
-  --font-action-extended: "Action Man Extended", sans-serif;
-  --font-fuzzy: "Fuzzy Bubbles", cursive;
-  --font-comic: "Comic Sans MS", cursive;
 }
 
-/* ===== FUENTES LOCALES ===== */
-/* Bigelow Rules */
 @font-face {
   font-family: "Bigelow Rules";
   src: url("/fonts/BigelowRules-Regular.ttf") format("truetype");
@@ -177,6 +186,284 @@
   src: url("/fonts/comicz.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
+  font-display: swap;
+}
+
+/* Action Man Shaded */
+@font-face {
+  font-family: "Action Man Shaded";
+  src: url("/fonts/Action Man Shaded.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Action Man Shaded";
+  src: url("/fonts/Action Man Shaded Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Anime Ace 2 */
+@font-face {
+  font-family: "Anime Ace 2";
+  src: url("/fonts/animeace2_reg.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Anime Ace 2";
+  src: url("/fonts/animeace2_bld.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Anime Ace 2";
+  src: url("/fonts/animeace2_ital.otf") format("opentype");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Back Issues BB */
+@font-face {
+  font-family: "Back Issues BB";
+  src: url("/fonts/BackIssuesBB_reg.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Back Issues BB";
+  src: url("/fonts/BackIssuesBB_ital.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Back Issues BB";
+  src: url("/fonts/BackIssuesBB_boldital.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Badaboom BB */
+@font-face {
+  font-family: "Badaboom BB";
+  src: url("/fonts/BADABB__.TTF") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* CC Wild Words */
+@font-face {
+  font-family: "CC Wild Words";
+  src: url("/fonts/CC Wild Words Roman.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CC Wild Words";
+  src: url("/fonts/CC Wild Words Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CC Wild Words";
+  src: url("/fonts/CC Wild Words Bold Italic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* CC Meanwhile */
+@font-face {
+  font-family: "CC Meanwhile";
+  src: url("/fonts/CCMeanwhile-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CC Meanwhile";
+  src: url("/fonts/CCMeanwhile-Italic.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "CC Meanwhile";
+  src: url("/fonts/CCMeanwhile-BoldItalic.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* CC Meanwhile Uncial */
+@font-face {
+  font-family: "CC Meanwhile Uncial";
+  src: url("/fonts/CCMeanwhile-Uncial.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* CC Mighty Mouth */
+@font-face {
+  font-family: "CC Mighty Mouth";
+  src: url("/fonts/fonnts.com-CCMightyMouth.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Comic Sans MS 3 */
+@font-face {
+  font-family: "Comic Sans MS 3";
+  src: url("/fonts/ComicSansMS3.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Comic Sans Graffiti */
+@font-face {
+  font-family: "Comic Sans Graffiti";
+  src: url("/fonts/design.graffiti.comicsansms.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Comic Sans Graffiti";
+  src: url("/fonts/design.graffiti.comicsansmsgras.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Digistrip */
+@font-face {
+  font-family: "Digistrip";
+  src: url("/fonts/digistrip.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Digistrip";
+  src: url("/fonts/digistrip_i.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Digistrip";
+  src: url("/fonts/digistrip_b.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Komika Title */
+@font-face {
+  font-family: "Komika Title";
+  src: url("/fonts/KOMTXT__.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Komika Title";
+  src: url("/fonts/KOMTXTI_.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Komika Title";
+  src: url("/fonts/KOMTXTB_.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Komika Title";
+  src: url("/fonts/KOMTXTBI.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Komika Title Kaps */
+@font-face {
+  font-family: "Komika Title Kaps";
+  src: url("/fonts/KOMTXTK_.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Komika Title Kaps";
+  src: url("/fonts/KOMTXTKI.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Komika Title Kaps";
+  src: url("/fonts/KOMTXTKB.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Komika Title Kaps";
+  src: url("/fonts/KOMTXKBI.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Komika Title Tight */
+@font-face {
+  font-family: "Komika Title Tight";
+  src: url("/fonts/KOMTXTT_.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Komika Title Tight";
+  src: url("/fonts/KOMTXTTI.ttf") format("truetype");
+  font-weight: normal;
+  font-style: italic;
   font-display: swap;
 }
 
