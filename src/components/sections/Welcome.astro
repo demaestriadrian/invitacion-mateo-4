@@ -2,18 +2,23 @@
 import Section from "./Section.astro";
 ---
 
-<Section className="pt-26">
+<Section className="pt-26 justify-between">
   <div class="relative">
-    <h1 class="text-5xl font-bold text-center font-mogra leading-16 text-shadow-black-4xs text-amber-300">
+    <h1 class="text-6xl font-bold text-center font-bangers tracking-widest leading-16 text-shadow-black-4xs text-amber-300">
     ¡Alerta en la Ciudad!
     </h1>
     <div class="absolute inset-0 m-auto w-[80%] h-[40%] bg-red-500 blur-2xl -z-1 animate-pulse"></div>
   </div>
-  <div class="my-20"></div>
-  <p class="text-4xl text-center font-bigelow leading-14 tracking-wider">
+  <p class="text-xl text-center font-cc-meanwhile leading-10 tracking-wider text-shadow-lg">
     Un mini hombre araña <span class="whitespace-nowrap">cumple 4 años ...</span> <br/>
     ¡Y necesita a todos sus amigos para
     salvar el día con una gran fiesta!
   </p>
   
 </Section>
+
+<style>
+  h1 {
+    text-shadow: 2px 3px 0 rgba(0, 0, 0, 0.6);
+  }
+</style>
