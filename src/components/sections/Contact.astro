@@ -3,10 +3,14 @@ import Section from "./Section.astro";
 import whatsapp from "@/assets/wspweb.png";
 import { Image } from "astro:assets";
 import Arrowdown from "@/assets/arrow.svg"
+import dialog from "@/assets/dialog/dialogo-exclamacion3.png"
 ---
 
-<Section className="px-10 pt-16 text-center justify-between">
-    <h3 class="font-vibur text-4xl">¡El hombre araña necesita saber cuántos superhéroes van a unirse a su misión!</h3>
+<Section className="p-1 text-center justify-between">
+    <div class="relative w-full flex flex-col items-center">
+        <Image src={dialog} alt="Diálogo" class="absolute inset-0 top-14 m-auto -z-10 invert"/>
+        <h3 class="font-fuzzy text-2xl pt-4 w-2/3">¿cuántos superhéroes van a unirse a la misión?</h3>
+    </div>
     <div class="font-chicle tracking-wider">
         <h2>Envíanos un mensaje a través de WhatsApp.</h2>
         <h2>Y confirmar tu asistencia</h2>
