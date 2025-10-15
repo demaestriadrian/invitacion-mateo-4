@@ -1,6 +1,7 @@
 ---
 import Section from "./Section.astro";
 import spiderman from "@/assets/spiderman.png";
+import dialog from "@/assets/dialog/dialogos-comentarios.png";
 import { Image } from "astro:assets";
 ---
 
@@ -10,15 +11,22 @@ import { Image } from "astro:assets";
         src={spiderman} 
         format="webp" 
         alt="Spiderman"
-        class="absolute -top-15 mx-auto w-7/12 hidden" 
+        class="absolute -top-15 right-0 mx-auto w-7/12 hidden" 
     />
 
-    <h2 class="font-chicle text-6xl text-center tracking-wider">
-        Te esperamos <br>
-        para <br>
-        Saltar, Reír <br>
-        bailar y <br>
-        Jugar
-    </h2>
+
+    <div id="spiderman-dialog" class="relative w-full h-1/2 justify-start items-center hidden">
+        <Image
+            src={dialog} 
+            alt="Dialogo de comentarios" 
+            class="absolute -z-10 w-full -scale-100 rotate-12 -left-5 opacity-70" 
+        />
+        <h2 class="absolute font-cc-meanwhile italic text-2xl text-black text-center px-12 top-[43%] -rotate-2">
+            Te esperamos <br>
+            para <br>
+            saltar, Reír <br>
+            bailar y jugar.
+        </h2>
+    </div>
     
 </Section>

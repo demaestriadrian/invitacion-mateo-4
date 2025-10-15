@@ -219,20 +219,50 @@ const initSpidermanAnimation = (spidermanElement: HTMLElement) => {
     // Remover la clase hidden para que sea visible durante la animación
     spidermanElement.classList.remove('hidden');
     
-    // Configurar estado inicial de la imagen
+    // Buscar el elemento del diálogo en la misma sección
+    const dialogElement = spidermanElement.closest('section')?.querySelector('#spiderman-dialog') as HTMLElement;
+    
+    // Crear el timeline principal
+    const tl = gsap.timeline();
+    
+    // Configurar estado inicial de Spiderman
     gsap.set(spidermanElement, {
         y: -200, // Posición inicial arriba de la pantalla
         opacity: 0
     });
+    
+    // Configurar estado inicial del diálogo (si existe)
+    if (dialogElement) {
+        // Remover hidden y agregar flex para el layout
+        dialogElement.classList.remove('hidden');
+        dialogElement.classList.add('flex');
+        
+        gsap.set(dialogElement, {
+            y: -100, // Posición inicial arriba
+            scale: 0, // Escala inicial en 0
+            opacity: 0
+        });
+    }
 
-    // Ejecutar animación con efecto elástico
-    gsap.to(spidermanElement, {
+    // Animación de Spiderman (primera parte del timeline)
+    tl.to(spidermanElement, {
         y: 0, // Posición final
         opacity: 1,
         duration: 1.5,
         ease: "elastic.out(1, 0.5)", // Efecto elástico
         delay: 0.2 // Pequeño delay para mejorar la percepción
     });
+    
+    // Animación del diálogo (segunda parte del timeline)
+    if (dialogElement) {
+        tl.to(dialogElement, {
+            y: 0, // Posición final
+            scale: 1, // Escala final normal
+            opacity: 1,
+            duration: 1.2,
+            ease: "back.out(1.7)", // Efecto de rebote para el scale
+        }, "-=1"); // Comenzar 1 segundo antes de que termine la animación anterior
+    }
 };
 
 export const initAnimations = () => {
