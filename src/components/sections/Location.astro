@@ -5,11 +5,11 @@ import gmaps from "@/assets/gmaps.png"
 import { Image } from "astro:assets";
 ---
 
-<Section className="p-10 font-mogra text-3xl justify-evenly">
-    <h2>Nos encontramos en</h2>
-    <Image src={stylo} alt="Logotipo de Stylo" format="webp" />
-    <p class="text-3xl tracking-widest text-shadow-sm">Calle 18 N° 3104</p>
-    <div class="mt-16 flex flex-col items-center justify-center ">
+<Section className="p-10 pb-0 font-mogra text-3xl justify-between h-[70%]">
+    <h2 class="flex-none">Nos encontramos en</h2>
+    <Image class="min-w-[100px] min-h-2 h-full w-auto" src={stylo} alt="Logotipo de Stylo" format="webp" />
+    <p class="text-3xl tracking-widest text-shadow-sm flex-none">Calle 18 N° 3104</p>
+    <div class="flex flex-col items-center justify-start">
         <a href="https://maps.app.goo.gl/KNN7PqPQrVMbuqky8" target="_blank" rel="noopener noreferrer">
             <Image src={gmaps} alt="Logo de Google Maps" format="webp" class="inline size-40"/>
         </a>
