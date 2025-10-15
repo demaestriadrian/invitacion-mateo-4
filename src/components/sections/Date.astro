@@ -1,6 +1,7 @@
 ---
 import Section from "./Section.astro";
 import peter from "@/assets/video/peter-paker-dancing.webm";
+import peterImg from "@/assets/peter-paker-dacing.png";
 import dialog from "@/assets/dialog/dialogo-pensamiento.png";
 import { Image } from "astro:assets";
 
@@ -34,10 +35,26 @@ import { Image } from "astro:assets";
         </p>
     </div>
     <div class="absolute left-0 -bottom-3 h-1/2 w-7/12 overflow-hidden">
-        <video autoplay loop muted playsinline class="h-full object-cover mx-auto my-4">
+        <!-- Video para navegadores compatibles con WebM -->
+        <video 
+            id="peter-video" 
+            autoplay 
+            loop 
+            muted 
+            playsinline 
+            class="h-full object-cover mx-auto my-4 hidden"
+        >
             <source src={peter} type="video/webm" />
             Your browser does not support the video tag.
         </video>
+        
+        <!-- Imagen de respaldo para Safari y navegadores incompatibles -->
+        <Image 
+            id="peter-image" 
+            src={peterImg} 
+            alt="Peter Parker dancing" 
+            class="h-full object-cover mx-auto my-4 hidden"
+        />
     </div>
 </Section>
 
@@ -69,6 +86,54 @@ import { Image } from "astro:assets";
         
     };
 
+    // Detectar si es Safari o un navegador que no soporta WebM con canal alpha
+    const isSafariOrUnsupported = () => {
+        const userAgent = navigator.userAgent.toLowerCase();
+        
+        // Detectar Safari (incluye Safari en iOS y macOS)
+        const isSafari = /safari/.test(userAgent) && !/chrome/.test(userAgent) && !/chromium/.test(userAgent);
+        
+        // Detectar otros navegadores que pueden tener problemas con WebM
+        const isIOS = /ipad|iphone|ipod/.test(userAgent);
+        const isOldEdge = /edge/.test(userAgent);
+        
+        return isSafari || isIOS || isOldEdge;
+    };
+
+    // Mostrar video o imagen según el soporte del navegador
+    const initializePeterMedia = () => {
+        const video = document.getElementById("peter-video");
+        const image = document.getElementById("peter-image");
+        
+        if (isSafariOrUnsupported()) {
+            // Usar imagen para Safari y navegadores incompatibles
+            if (image) {
+                image.classList.remove("hidden");
+            }
+            if (video) {
+                video.classList.add("hidden");
+            }
+        } else {
+            // Usar video para navegadores compatibles
+            if (video) {
+                video.classList.remove("hidden");
+            }
+            if (image) {
+                image.classList.add("hidden");
+            }
+        }
+    };
+
     updateTimer();
     setInterval(updateTimer, 2000);
+    
+    // Inicializar el medio apropiado cuando la página esté lista
+    document.addEventListener("DOMContentLoaded", initializePeterMedia);
+    
+    // También ejecutar inmediatamente en caso de que DOMContentLoaded ya haya pasado
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initializePeterMedia);
+    } else {
+        initializePeterMedia();
+    }
 </script>
