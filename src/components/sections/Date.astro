@@ -15,12 +15,26 @@ import { Image } from "astro:assets";
         </h2>
     </div>
     <!-- Dialogo de pensamiento -->
+     
     <div class="relative">
         <Image src={dialog} alt="Dialogo de pensamiento" class="w-4/5 mx-auto rotate-12 translate-y-3 -translate-x-3" />
+        
         <p class="
         absolute w-2/5 max-h-25 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -rotate-2
         text-black  font-anime-ace italic text-base  text-center overflow-hidden">
-           Solo faltan <span id="days" class="font-bold text-2xl">2</span> días para la gran fiesta. 
+        <!-- Texto antes del evento -->
+            <span id="dialog-before" class="hidden">
+                Solo falta<i>n</i> <span class="days font-bold text-2xl">2</span> día<i>s</i> para la gran fiesta. 
+            </span>
+        <!-- Texto el día del evento -->
+            <span id="dialog-today" class="hidden">
+                <span class="font-bold text-2xl">HOY</span> es el <br>
+                <span class="font-bold text-xl">gran día</span>
+            </span>
+        <!-- Texto después del evento -->
+            <span id="dialog-after" class="hidden">
+                Ya pas<i>ar</i>o<i>n</i> <span class="days font-bold text-2xl">2</span> día<i>s</i> de la gran fiesta. 
+            </span>
         </p>
     </div>
     <!-- Horario -->
@@ -70,20 +84,47 @@ import { Image } from "astro:assets";
     const S = 1000, M = S * 60, H = M * 60, D = H * 24;
     const eventDate = new Date("2025-11-03T18:00:00-03:00").getTime();
 
-    const $hours = document.getElementById("hours");
-    const $days = document.getElementById("days");
+    const $days = document.querySelectorAll(".days") as NodeListOf<HTMLSpanElement>;
+    
+    // Elementos del diálogo
+    const $dialogBefore = document.getElementById("dialog-before");
+    const $dialogToday = document.getElementById("dialog-today");
+    const $dialogAfter = document.getElementById("dialog-after");
 
-    const updateTimer = () => {
+    const updateDialogDisplay = () => {
         const now = Date.now();
         const diff = eventDate - now;
 
         const days = Math.floor(diff / D);
-        const hours = Math.floor((diff % D) / H);
 
-        if ($days !== null) $days.innerText = days.toString();
+        if (Math.abs(days) == 1) {
+                document.querySelectorAll("i").forEach( el => {
+                    el.classList.add("hidden");
+                });
+        }
         
-        if ($hours !== null) $hours.innerText = hours.toString();
         
+        if (days > 0) {
+            // Antes del día del evento
+            if ($dialogBefore) $dialogBefore.classList.remove("hidden");
+        } else if (days === 0) {
+            // El día del evento
+            if ($dialogToday) $dialogToday.classList.remove("hidden");
+        } else {
+            // Después del evento
+            if ($dialogAfter) $dialogAfter.classList.remove("hidden");
+        }
+    };
+
+    const updateTimer = () => {
+        const now = Date.now();
+        const diff = eventDate - now;
+        let days = Math.floor(diff / D);
+
+        if ($days !== null) $days.forEach(el => el.innerText = Math.abs(days).toString());
+
+        // Actualizar la visualización del diálogo
+        updateDialogDisplay();
     };
 
     // Detectar si es Safari o un navegador que no soporta WebM con canal alpha
@@ -124,6 +165,8 @@ import { Image } from "astro:assets";
         }
     };
 
+    // Inicializar la visualización del diálogo
+    updateDialogDisplay();
     updateTimer();
     setInterval(updateTimer, 2000);
     
